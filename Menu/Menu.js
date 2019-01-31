@@ -1,5 +1,3 @@
-
-
 window.addEventListener('load', () => {
 
   const outsideClickListener = e => {
@@ -24,4 +22,33 @@ window.addEventListener('load', () => {
   const menuButton = document.getElementsByClassName('menu-button')[0];
   // Using your menuButton reference, add a click handler that calls toggleMenu
   menuButton.addEventListener('click', toggleMenu);
+
+  const body = document.getElementsByTagName("body")[0];
+  const html = document.getElementsByTagName("html")[0];
+  document.getElementById('flap-it-up').addEventListener('click', () => {
+    html.style.backgroundImage = 'url(../assets/flappy_bg.png)';
+    html.style.backgroundColor = '';
+    body.style.backgroundColor = '#fffef7';
+    TweenMax.to(body, 1, {scale: 0.15});
+    const gravity = 0.0010;
+    let vertSpeed = 0;
+    document.addEventListener('click', () => {
+      vertSpeed = 0.35;
+    });
+
+    let time = Date.now();
+    const draw = () => {
+      elapsed = Date.now() - time;
+      time = Date.now();
+      if(vertSpeed > 0) {
+        TweenMax.to(body, 0, {y: `-=${Math.abs(vertSpeed) * elapsed}`});
+      } else {
+        TweenMax.to(body, 0, {y: `+=${Math.abs(vertSpeed) * elapsed}`});
+      }
+      vertSpeed -= gravity * elapsed;
+      requestAnimationFrame(draw);
+    };
+
+    draw();
+  });
 });
