@@ -25,6 +25,8 @@ window.addEventListener('load', () => {
 
   const body = document.getElementsByTagName("body")[0];
   const html = document.getElementsByTagName("html")[0];
+
+  // flappy bird mode
   document.getElementById('flap-it-up').addEventListener('click', () => {
     html.style.backgroundImage = 'url(../assets/flappy_bg.png)';
     html.style.backgroundColor = '';
@@ -32,11 +34,17 @@ window.addEventListener('load', () => {
     TweenMax.to(body, 1, {scale: 0.15});
     const gravity = 0.0010;
     let vertSpeed = 0;
-    document.addEventListener('click', () => {
+
+    // on document click, reset speed to 0.35
+    document.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
       vertSpeed = 0.35;
     });
 
     let time = Date.now();
+
+    // over time, take off speed
     const draw = () => {
       elapsed = Date.now() - time;
       time = Date.now();
