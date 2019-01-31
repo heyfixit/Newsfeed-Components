@@ -1,5 +1,4 @@
 window.addEventListener('load', () => {
-
   const outsideClickListener = e => {
     if (!menu.contains(e.target)) {
       menu.classList.remove('menu--open');
